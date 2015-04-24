@@ -56,6 +56,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="36" max="32767" attributes="0"/>
                   <Component id="registerBtn" min="-2" pref="132" max="-2" attributes="0"/>
@@ -67,11 +68,18 @@
                   <EmptySpace min="-2" pref="135" max="-2" attributes="0"/>
                   <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
+=======
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jButton1" min="-2" pref="132" max="-2" attributes="0"/>
+                  <EmptySpace pref="236" max="32767" attributes="0"/>
+>>>>>>> 7ddc23c20f96ac4441f4676a64575be69ac2748b
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -81,6 +89,12 @@
                   <EmptySpace pref="36" max="32767" attributes="0"/>
                   <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+=======
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                  <Component id="jButton1" min="-2" pref="68" max="-2" attributes="0"/>
+                  <EmptySpace pref="122" max="32767" attributes="0"/>
+>>>>>>> 7ddc23c20f96ac4441f4676a64575be69ac2748b
               </Group>
           </Group>
         </DimensionLayout>
@@ -88,12 +102,17 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
+<<<<<<< HEAD
             <Property name="text" type="java.lang.String" value="Consultar"/>
+=======
+            <Property name="text" type="java.lang.String" value="Ingreso de usuarios"/>
+>>>>>>> 7ddc23c20f96ac4441f4676a64575be69ac2748b
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
         </Component>
+<<<<<<< HEAD
         <Component class="javax.swing.JButton" name="registerBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Registrar"/>
@@ -111,6 +130,8 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
           </Events>
         </Component>
+=======
+>>>>>>> 7ddc23c20f96ac4441f4676a64575be69ac2748b
       </SubComponents>
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel1">

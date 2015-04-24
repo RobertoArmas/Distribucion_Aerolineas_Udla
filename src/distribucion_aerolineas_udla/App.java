@@ -29,19 +29,27 @@ public class App extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+<<<<<<< HEAD
         registerBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+=======
+>>>>>>> 7ddc23c20f96ac4441f4676a64575be69ac2748b
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+<<<<<<< HEAD
         jButton1.setText("Consultar");
+=======
+        jButton1.setText("Ingreso de usuarios");
+>>>>>>> 7ddc23c20f96ac4441f4676a64575be69ac2748b
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+<<<<<<< HEAD
         registerBtn.setText("Registrar");
         registerBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -61,10 +69,13 @@ public class App extends javax.swing.JFrame {
             }
         });
 
+=======
+>>>>>>> 7ddc23c20f96ac4441f4676a64575be69ac2748b
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(36, Short.MAX_VALUE)
                 .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -75,10 +86,17 @@ public class App extends javax.swing.JFrame {
                 .addGap(135, 135, 135)
                 .addComponent(jButton3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+=======
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(236, Short.MAX_VALUE))
+>>>>>>> 7ddc23c20f96ac4441f4676a64575be69ac2748b
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+<<<<<<< HEAD
                 .addGap(53, 53, 53)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(registerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -86,6 +104,11 @@ public class App extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(20, 20, 20))
+=======
+                .addGap(16, 16, 16)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(122, Short.MAX_VALUE))
+>>>>>>> 7ddc23c20f96ac4441f4676a64575be69ac2748b
         );
 
         jLabel1.setText("Sistema de Aerolíneas");
@@ -121,6 +144,7 @@ public class App extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+<<<<<<< HEAD
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_registerBtnActionPerformed
@@ -137,6 +161,8 @@ public class App extends javax.swing.JFrame {
         
     }//GEN-LAST:event_registerBtnMouseClicked
 
+=======
+>>>>>>> 7ddc23c20f96ac4441f4676a64575be69ac2748b
     /**
      * @param args the command line arguments
      */
@@ -174,9 +200,14 @@ public class App extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+<<<<<<< HEAD
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton registerBtn;
+=======
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+>>>>>>> 7ddc23c20f96ac4441f4676a64575be69ac2748b
     // End of variables declaration//GEN-END:variables
 }
