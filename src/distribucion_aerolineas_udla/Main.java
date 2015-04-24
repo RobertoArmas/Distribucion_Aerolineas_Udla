@@ -17,6 +17,9 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        App aplication = new App();
+        aplication.setTitle("Sistema de Aerolíneas");
+        aplication.show();
     }
     
 }
