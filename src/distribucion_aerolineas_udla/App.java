@@ -145,8 +145,6 @@ public class App extends javax.swing.JFrame {
         
     }//GEN-LAST:event_registerBtnMouseClicked
 
-=======
->>>>>>> 7ddc23c20f96ac4441f4676a64575be69ac2748b
     /**
      * @param args the command line arguments
      */
