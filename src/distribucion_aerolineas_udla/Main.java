@@ -6,6 +6,13 @@
 
 package distribucion_aerolineas_udla;
 
+import Entidades.Asiento;
+import Entidades.Avion;
+import Entidades.Hora;
+import Entidades.Registro;
+import GestorInformacion.GestorInformacion;
+import Listas.Lista;
+
 /**
  *
  * @author cisco
@@ -17,9 +24,15 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        App aplication = new App();
+       App aplication = new App();
         aplication.setTitle("Sistema de Aerolíneas");
         aplication.show();
+      
+       
+        
+        
     }
+    
+    
     
 }

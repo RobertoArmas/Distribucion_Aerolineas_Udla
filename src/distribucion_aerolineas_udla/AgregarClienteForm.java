@@ -16,6 +16,7 @@ public class AgregarClienteForm extends javax.swing.JFrame {
      */
     public AgregarClienteForm() {
         initComponents();
+       
     }
 
     /**

@@ -5,17 +5,99 @@
  */
 package distribucion_aerolineas_udla;
 
+import Entidades.Asiento;
+import Entidades.Cliente;
+import Entidades.Hora;
+import GestorInformacion.GestorInformacion;
+import Listas.Lista;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author robertoarmas
  */
 public class RegistarForm extends javax.swing.JFrame {
 
+    private DefaultComboBoxModel clienteModel;
+    private DefaultComboBoxModel horaModel;
+     private DefaultComboBoxModel asientoModel;
+    private Lista horasList;
     /**
      * Creates new form RegistarForm
      */
     public RegistarForm() {
         initComponents();
+        this.horasList = new Lista();
+        this.clienteModel = new DefaultComboBoxModel();
+        this.horaModel = new DefaultComboBoxModel();
+        this.asientoModel = new DefaultComboBoxModel();
+        
+        new GestorInformacion("cliente"){
+
+            @Override
+            public void didGetData(Lista datos) {
+               for(int i=0;i<datos.size();i++){
+                   clienteModel.addElement(((Cliente)datos.get(i)).getCedula());
+               }
+            }
+
+            @Override
+            public void didFailLoad() {
+            
+            }
+        
+        };
+        
+        new GestorInformacion("horas"){
+
+            @Override
+            public void didGetData(Lista datos) {
+                horasList = datos;
+               for(int i=0;i<datos.size();i++){
+                   horaModel.addElement(((Hora)datos.get(i)).getHora());
+               }
+            }
+
+            @Override
+            public void didFailLoad() {
+            
+            }
+        
+        };
+        this.horaCheckBox.setModel(this.horaModel);
+        this.clienteCheckBox.setModel(this.clienteModel);
+        this.asientoCheckBox.setModel(this.asientoModel);
+        
+        
+        this.horaCheckBox.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                asientoModel.removeAllElements();
+                new GestorInformacion("asiento"){
+
+                    @Override
+                    public void didGetData(Lista datos) {
+                        for(int i=0;i<datos.size();i++){
+                            Hora hora = Hora.findHoraByHora((horaModel.getElementAt(horaCheckBox.getSelectedIndex()).toString()),horasList );
+                            if(((Asiento)datos.get(i)).getAvion().getNombre().compareTo(hora.getAvion().getNombre()) == 0 && ((Asiento)datos.get(i)).getDisponible() == true){
+                                 asientoModel.addElement(((Asiento)datos.get(i)).getName());
+                            }
+               
+                        }
+                    }
+
+                    @Override
+                    public void didFailLoad() {
+                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                };
+            }
+        });
     }
 
     /**
@@ -28,17 +110,19 @@ public class RegistarForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
+        clienteCheckBox = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         addClientBtn = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        horaCheckBox = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        asientoCheckBox = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Registrar");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel1.setText("Nombre");
+        jLabel1.setText("Cliente");
 
         addClientBtn.setText("Agregra Nuevo");
         addClientBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -47,32 +131,54 @@ public class RegistarForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Hora");
+
+        jLabel3.setText("Asiento");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(asientoCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1))
                 .addGap(57, 57, 57))
             .addGroup(layout.createSequentialGroup()
-                .addGap(211, 211, 211)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addClientBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(188, 188, 188)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(clienteCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)
+                        .addComponent(addClientBtn))
+                    .addComponent(horaCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clienteCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(addClientBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 271, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(horaCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(asientoCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(26, 26, 26))
         );
@@ -123,8 +229,16 @@ public class RegistarForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addClientBtn;
+    private javax.swing.JComboBox asientoCheckBox;
+    private javax.swing.JComboBox clienteCheckBox;
+    private javax.swing.JComboBox horaCheckBox;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
+
+    private DefaultListModel DefaultListModel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
