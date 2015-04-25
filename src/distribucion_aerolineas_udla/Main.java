@@ -27,7 +27,23 @@ public class Main {
        App aplication = new App();
         aplication.setTitle("Sistema de Aerolíneas");
         aplication.show();
-      
+        
+       /* new GestorInformacion("registro"){
+
+            @Override
+            public void didGetData(Lista datos) {
+                for(int i=0;i<datos.size();i++){
+                    System.out.println(((Registro)datos.get(i)).getAsiento().getName());
+                }
+            }
+
+            @Override
+            public void didFailLoad() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+            
+        };*/
+     
        
         
         

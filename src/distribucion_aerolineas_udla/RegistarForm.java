@@ -6,8 +6,10 @@
 package distribucion_aerolineas_udla;
 
 import Entidades.Asiento;
+import Entidades.Avion;
 import Entidades.Cliente;
 import Entidades.Hora;
+import Entidades.Registro;
 import GestorInformacion.GestorInformacion;
 import Listas.Lista;
 import java.awt.event.ActionEvent;
@@ -24,8 +26,13 @@ public class RegistarForm extends javax.swing.JFrame {
 
     private DefaultComboBoxModel clienteModel;
     private DefaultComboBoxModel horaModel;
-     private DefaultComboBoxModel asientoModel;
+    private DefaultComboBoxModel asientoModel;
     private Lista horasList;
+    private Cliente clienteSeleccionado;
+    private Hora horaSeleccionada;
+    private Asiento asientoSeleccionado;
+    private Avion avionSeleccionado;
+
     /**
      * Creates new form RegistarForm
      */
@@ -35,59 +42,55 @@ public class RegistarForm extends javax.swing.JFrame {
         this.clienteModel = new DefaultComboBoxModel();
         this.horaModel = new DefaultComboBoxModel();
         this.asientoModel = new DefaultComboBoxModel();
-        
-        new GestorInformacion("cliente"){
+
+        new GestorInformacion("cliente") {
 
             @Override
             public void didGetData(Lista datos) {
-               for(int i=0;i<datos.size();i++){
-                   clienteModel.addElement(((Cliente)datos.get(i)).getCedula());
-               }
+                for (int i = 0; i < datos.size(); i++) {
+                    clienteModel.addElement(((Cliente) datos.get(i)).getCedula());
+                }
             }
 
             @Override
             public void didFailLoad() {
-            
+
             }
-        
+
         };
-        
-        new GestorInformacion("horas"){
+
+        new GestorInformacion("horas") {
 
             @Override
             public void didGetData(Lista datos) {
                 horasList = datos;
-               for(int i=0;i<datos.size();i++){
-                   horaModel.addElement(((Hora)datos.get(i)).getHora());
-               }
+                for (int i = 0; i < datos.size(); i++) {
+                    horaModel.addElement(((Hora) datos.get(i)).getHora());
+                }
             }
 
             @Override
             public void didFailLoad() {
-            
+
             }
-        
+
         };
+
         this.horaCheckBox.setModel(this.horaModel);
         this.clienteCheckBox.setModel(this.clienteModel);
         this.asientoCheckBox.setModel(this.asientoModel);
-        
-        
-        this.horaCheckBox.addActionListener(new ActionListener(){
+
+        this.clienteCheckBox.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                asientoModel.removeAllElements();
-                new GestorInformacion("asiento"){
+                new GestorInformacion("cliente") {
 
                     @Override
                     public void didGetData(Lista datos) {
-                        for(int i=0;i<datos.size();i++){
-                            Hora hora = Hora.findHoraByHora((horaModel.getElementAt(horaCheckBox.getSelectedIndex()).toString()),horasList );
-                            if(((Asiento)datos.get(i)).getAvion().getNombre().compareTo(hora.getAvion().getNombre()) == 0 && ((Asiento)datos.get(i)).getDisponible() == true){
-                                 asientoModel.addElement(((Asiento)datos.get(i)).getName());
-                            }
-               
+                        for (int i = 0; i < datos.size(); i++) {
+                            clienteSeleccionado = Cliente.findClienteByCedula((clienteModel.getElementAt(clienteCheckBox.getSelectedIndex()).toString()), datos);
+
                         }
                     }
 
@@ -97,7 +100,95 @@ public class RegistarForm extends javax.swing.JFrame {
                     }
                 };
             }
+
         });
+
+        this.asientoCheckBox.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (asientoModel.getSize() == 0) {
+                } else {
+                    new GestorInformacion("asiento") {
+
+                        @Override
+                        public void didGetData(Lista datos) {
+                            for (int i = 0; i < datos.size(); i++) {
+
+                                asientoSeleccionado = Asiento.findAsientoByNameAndAvion(asientoModel.getElementAt(asientoCheckBox.getSelectedIndex()).toString(), avionSeleccionado.getNombre(), datos);
+                                asientoSeleccionado = new Asiento(asientoSeleccionado.getId(), asientoSeleccionado.getName(), false, asientoSeleccionado.getAvion());
+                            }
+                        }
+
+                        @Override
+                        public void didFailLoad() {
+                            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        }
+                    };
+                }
+            }
+
+        });
+
+        this.horaCheckBox.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                horaSeleccionada = Hora.findHoraByHora((horaModel.getElementAt(horaCheckBox.getSelectedIndex()).toString()), horasList);
+                avionSeleccionado = horaSeleccionada.getAvion();
+                asientoModel.removeAllElements();
+                new GestorInformacion("asiento") {
+
+                    @Override
+                    public void didGetData(Lista datos) {
+                        for (int i = 0; i < datos.size(); i++) {
+
+                            if (((Asiento) datos.get(i)).getAvion().getNombre().compareTo(horaSeleccionada.getAvion().getNombre()) == 0 && ((Asiento) datos.get(i)).getDisponible() == true) {
+                                asientoModel.addElement(((Asiento) datos.get(i)).getName());
+
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void didFailLoad() {
+                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                };
+
+            }
+        });
+
+    }
+
+    private void guardarAsientos(Lista asientos) {
+      
+        new GestorInformacion("asiento", "w", asientos) {
+
+            @Override
+            public void didGetData(Lista datos) {
+                System.out.println("Guardo");
+                App app = new App();
+                app.show();
+                dispose();
+            }
+
+            @Override
+            public void didFailLoad() {
+                System.out.println("Error");
+            }
+
+        };
+    }
+
+    private Boolean validarCampos() {
+        if (clienteSeleccionado == null || horaSeleccionada == null || asientoSeleccionado == null) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -109,7 +200,7 @@ public class RegistarForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        registrarBtn = new javax.swing.JButton();
         clienteCheckBox = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         addClientBtn = new javax.swing.JButton();
@@ -120,7 +211,12 @@ public class RegistarForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Registrar");
+        registrarBtn.setText("Registrar");
+        registrarBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registrarBtnMouseClicked(evt);
+            }
+        });
 
         jLabel1.setText("Cliente");
 
@@ -135,6 +231,12 @@ public class RegistarForm extends javax.swing.JFrame {
 
         jLabel3.setText("Asiento");
 
+        asientoCheckBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoCheckBoxMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,7 +248,7 @@ public class RegistarForm extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(asientoCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1))
+                    .addComponent(registrarBtn))
                 .addGap(57, 57, 57))
             .addGroup(layout.createSequentialGroup()
                 .addGap(188, 188, 188)
@@ -179,7 +281,7 @@ public class RegistarForm extends javax.swing.JFrame {
                     .addComponent(asientoCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(registrarBtn)
                 .addGap(26, 26, 26))
         );
 
@@ -191,6 +293,65 @@ public class RegistarForm extends javax.swing.JFrame {
         AgregarClienteForm addClientForm = new AgregarClienteForm();
         addClientForm.show();
     }//GEN-LAST:event_addClientBtnMouseClicked
+
+    private void registrarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registrarBtnMouseClicked
+        // TODO add your handling code here:
+        //Registrar
+        if (validarCampos()) {
+            new GestorInformacion("registro") {
+                @Override
+                public void didGetData(Lista datos) {
+
+                    Registro nuevo = new Registro(datos.size() + 1, clienteSeleccionado, horaSeleccionada, asientoSeleccionado, "Vendido");
+                    datos.add(nuevo);
+
+                    new GestorInformacion("registro", "w", datos) {
+                        @Override
+                        public void didGetData(Lista datos) {
+
+                            new GestorInformacion("asiento") {
+
+                                @Override
+                                public void didGetData(Lista datos) {
+                                    for (int i = 0; i < datos.size(); i++) {
+                                        if (asientoSeleccionado.getId() == ((Asiento) datos.get(i)).getId()) {
+                                            datos.getNode(i).setDato(asientoSeleccionado);
+                                        }
+                                    }
+                                    guardarAsientos(datos);
+                                }
+
+                                @Override
+                                public void didFailLoad() {
+
+                                }
+
+                            };
+                        }
+
+                        @Override
+                        public void didFailLoad() {
+                            System.out.println("No guardo");
+                        }
+
+                    };
+                }
+
+                @Override
+                public void didFailLoad() {
+                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                }
+
+            };
+        } else {
+            System.out.println("Seleccione ");
+        }
+
+    }//GEN-LAST:event_registrarBtnMouseClicked
+
+    private void asientoCheckBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoCheckBoxMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoCheckBoxMouseClicked
 
     /**
      * @param args the command line arguments
@@ -232,10 +393,10 @@ public class RegistarForm extends javax.swing.JFrame {
     private javax.swing.JComboBox asientoCheckBox;
     private javax.swing.JComboBox clienteCheckBox;
     private javax.swing.JComboBox horaCheckBox;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton registrarBtn;
     // End of variables declaration//GEN-END:variables
 
     private DefaultListModel DefaultListModel() {

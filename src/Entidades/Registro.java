@@ -17,12 +17,14 @@ public class Registro implements Serializable{
     public Cliente cliente;
     public Hora hora;
     public Asiento asiento;
+    public String status;
     
-    public Registro(int id, Cliente cliente,Hora hora,Asiento asiento){
+    public Registro(int id, Cliente cliente,Hora hora,Asiento asiento, String status){
         this.id = id;
         this.cliente = cliente;
         this.hora = hora;
         this.asiento = asiento;
+        this.status = status;
     }
 
     public int getId() {
@@ -56,6 +58,15 @@ public class Registro implements Serializable{
     public void setAsiento(Asiento asiento) {
         this.asiento = asiento;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     
     
 }

@@ -28,8 +28,9 @@ public class App extends javax.swing.JFrame {
     private void initComponents() {
 
         registerBtn = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        consultarBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        registroBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,33 +41,51 @@ public class App extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Consultar");
+        consultarBtn.setText("Consultar");
+        consultarBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                consultarBtnMouseClicked(evt);
+            }
+        });
 
         jButton3.setText("Salir");
+
+        registroBtn.setText("Registro de vuelos");
+        registroBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registroBtnMouseClicked(evt);
+            }
+        });
+        registroBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registroBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(registerBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(77, 77, 77))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(139, 139, 139)
-                .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton3)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(consultarBtn)
+                        .addComponent(registroBtn)
+                        .addComponent(registerBtn)))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(registerBtn)
-                    .addComponent(jButton2))
-                .addGap(53, 53, 53)
+                .addGap(63, 63, 63)
+                .addComponent(registerBtn)
+                .addGap(18, 18, 18)
+                .addComponent(registroBtn)
+                .addGap(24, 24, 24)
+                .addComponent(consultarBtn)
+                .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addContainerGap(61, Short.MAX_VALUE))
         );
@@ -78,9 +97,26 @@ public class App extends javax.swing.JFrame {
          // TODO add your handling code here:
         RegistarForm reg = new RegistarForm();
         reg.show();
-        this.hide();
+        this.dispose();
         
     }//GEN-LAST:event_registerBtnMouseClicked
+
+    private void registroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_registroBtnActionPerformed
+
+    private void registroBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroBtnMouseClicked
+            // TODO add your handling code here:
+        ConsultarForm cons = new ConsultarForm();
+        cons.show();
+        
+    }//GEN-LAST:event_registroBtnMouseClicked
+
+    private void consultarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultarBtnMouseClicked
+        // TODO add your handling code here:
+        BusquedaForm busq = new BusquedaForm();
+        busq.show();
+    }//GEN-LAST:event_consultarBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -118,8 +154,9 @@ public class App extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton consultarBtn;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton registerBtn;
+    private javax.swing.JButton registroBtn;
     // End of variables declaration//GEN-END:variables
 }

@@ -76,6 +76,15 @@ public class Cliente implements Serializable{
         }
         return null;
     }
+      
+      public static Boolean isExistCliente(String cedula, Lista datos){
+          for(int i=0; i<datos.size();i++){
+              if(cedula.compareTo(((Cliente)datos.get(i)).getCedula()) == 0){
+                  return true;
+              }
+          }
+          return false;
+      }
     
     
     

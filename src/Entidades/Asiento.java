@@ -72,5 +72,15 @@ public class Asiento implements Serializable{
         return null;
     }
     
+    public static Asiento findAsientoByNameAndAvion(String asiento, String avion, Lista datos){
+        for(int i=0;i<datos.size();i++){
+            if(asiento.compareTo(((Asiento)datos.get(i)).getName()) == 0 && avion.compareTo(((Asiento)datos.get(i)).getAvion().getNombre()) == 0){
+                return ((Asiento)datos.get(i));
+            }
+        }
+        
+        return null;
+    }
+    
     
 }

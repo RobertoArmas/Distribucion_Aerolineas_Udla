@@ -51,6 +51,17 @@ public class Lista {
         return null;
     }
     
+     public Nodo getNode(int index){
+        Nodo aux = this.inicio;
+        for(int i=0;i<=index;i++){
+            if(i == index){
+                return aux;
+            }
+            aux = aux.getSiguiente();
+        }
+        return null;
+    }
+    
     public void clear(){
         this.inicio = null;
         this.fin = null;
