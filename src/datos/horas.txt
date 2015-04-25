@@ -1,0 +1,6 @@
+1#08:00#Boeing 747
+2#09:00#Airbus A380
+3#10:00#Boeing 737
+4#19:00#Boeing 747
+5#20:00#Airbus A380
+6#21:00#Boeing 737
