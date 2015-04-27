@@ -53,6 +53,11 @@ public class BusquedaForm extends javax.swing.JFrame {
         });
 
         closeBtn.setText("Cancel");
+        closeBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeBtnMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,6 +107,13 @@ public class BusquedaForm extends javax.swing.JFrame {
         horarios.show();
         this.dispose();
     }//GEN-LAST:event_verHorarioBtnMouseClicked
+
+    private void closeBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeBtnMouseClicked
+        // TODO add your handling code here:
+        App app = new App();
+        app.show();
+        this.dispose();
+    }//GEN-LAST:event_closeBtnMouseClicked
 
     /**
      * @param args the command line arguments

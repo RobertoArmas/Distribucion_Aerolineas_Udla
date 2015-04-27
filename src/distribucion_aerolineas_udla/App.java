@@ -27,12 +27,32 @@ public class App extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         registerBtn = new javax.swing.JButton();
-        consultarBtn = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         registroBtn = new javax.swing.JButton();
+        salirBtn = new javax.swing.JButton();
+        consultarBtn = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(178, 16, 41));
+
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Bienvenidos a Aerolíneas Udla");
 
         registerBtn.setText("Registrar");
         registerBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -40,15 +60,6 @@ public class App extends javax.swing.JFrame {
                 registerBtnMouseClicked(evt);
             }
         });
-
-        consultarBtn.setText("Consultar");
-        consultarBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                consultarBtnMouseClicked(evt);
-            }
-        });
-
-        jButton3.setText("Salir");
 
         registroBtn.setText("Registro de vuelos");
         registroBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -62,32 +73,62 @@ public class App extends javax.swing.JFrame {
             }
         });
 
+        salirBtn.setText("Salir");
+        salirBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                salirBtnMouseClicked(evt);
+            }
+        });
+
+        consultarBtn.setText("Consultar");
+        consultarBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                consultarBtnMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(salirBtn)
+                .addGap(26, 26, 26))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(registerBtn)
+                    .addComponent(registroBtn)
+                    .addComponent(consultarBtn))
+                .addContainerGap(167, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(registerBtn)
+                .addGap(18, 18, 18)
+                .addComponent(registroBtn)
+                .addGap(18, 18, 18)
+                .addComponent(consultarBtn)
+                .addGap(24, 24, 24)
+                .addComponent(salirBtn)
+                .addGap(33, 33, 33))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(consultarBtn)
-                        .addComponent(registroBtn)
-                        .addComponent(registerBtn)))
-                .addContainerGap(186, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(registerBtn)
-                .addGap(18, 18, 18)
-                .addComponent(registroBtn)
-                .addGap(24, 24, 24)
-                .addComponent(consultarBtn)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addContainerGap(61, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -109,6 +150,7 @@ public class App extends javax.swing.JFrame {
             // TODO add your handling code here:
         ConsultarForm cons = new ConsultarForm();
         cons.show();
+        this.dispose();
         
     }//GEN-LAST:event_registroBtnMouseClicked
 
@@ -116,7 +158,13 @@ public class App extends javax.swing.JFrame {
         // TODO add your handling code here:
         BusquedaForm busq = new BusquedaForm();
         busq.show();
+        this.dispose();
     }//GEN-LAST:event_consultarBtnMouseClicked
+
+    private void salirBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salirBtnMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_salirBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -155,8 +203,11 @@ public class App extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton consultarBtn;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JButton registerBtn;
     private javax.swing.JButton registroBtn;
+    private javax.swing.JButton salirBtn;
     // End of variables declaration//GEN-END:variables
 }

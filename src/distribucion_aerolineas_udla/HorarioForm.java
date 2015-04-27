@@ -165,6 +165,8 @@ public class HorarioForm extends javax.swing.JFrame {
     }//GEN-LAST:event_actualizarBtnMouseClicked
 
     private void cerrarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarBtnMouseClicked
+        App app = new App();
+        app.show();
         this.dispose();
     }//GEN-LAST:event_cerrarBtnMouseClicked
 
