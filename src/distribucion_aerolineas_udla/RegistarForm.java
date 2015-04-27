@@ -222,7 +222,7 @@ public class RegistarForm extends javax.swing.JFrame {
 
         jLabel1.setText("Cliente");
 
-        addClientBtn.setText("Agregra Nuevo");
+        addClientBtn.setText("Agregar Nuevo");
         addClientBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addClientBtnMouseClicked(evt);

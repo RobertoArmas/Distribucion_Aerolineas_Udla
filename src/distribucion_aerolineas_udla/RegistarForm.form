@@ -115,7 +115,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="addClientBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Agregra Nuevo"/>
+        <Property name="text" type="java.lang.String" value="Agregar Nuevo"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addClientBtnMouseClicked"/>
