@@ -27,7 +27,7 @@ public class ConsultarForm extends javax.swing.JFrame {
     public ConsultarForm() {
         initComponents();
         registroModel = new DefaultListModel();
-
+        
         new GestorInformacion("registro") {
 
             @Override
@@ -251,7 +251,11 @@ public class ConsultarForm extends javax.swing.JFrame {
     private void updateList() {
         registroModel.removeAllElements();
         for (int i = 0; i < this.registroListObject.size(); i++) {
-            registroModel.addElement(((Registro) registroListObject.get(i)).getCliente().getCedula() + " - " + ((Registro) registroListObject.get(i)).getAsiento().getName() + " - " + ((Registro) registroListObject.get(i)).getHora().getHora() + " - " + ((Registro) registroListObject.get(i)).getHora().getAvion().getNombre() + " - " + ((Registro) registroListObject.get(i)).getStatus());
+            registroModel.addElement(((Registro) registroListObject.get(i)).getCliente().getCedula() 
+            + " - " + ((Registro) registroListObject.get(i)).getAsiento().getName() + " - " 
+            + ((Registro) registroListObject.get(i)).getHora().getHora() 
+            + " - " + ((Registro) registroListObject.get(i)).getHora().getAvion().getNombre() 
+            + " - " + ((Registro) registroListObject.get(i)).getStatus());
         }
     }
 
