@@ -85,17 +85,21 @@ public class Asiento implements Serializable {
         return null;
     }
 
-    public static Lista findAsientosDisponiblesFromHour(Hora hora) {
-        Lista asientos = null;
-        try {
-            ResultSet rs = DBManager.executeQuery("SELECT a.id, a.name, a.plane, h.status FROM asiento as a INNER JOIN hora_asiento as h WHERE h.hora = ? and h.status = 1 and a.id = h.asiento", new String[]{hora.getHora()});
-            while (rs.next()) {
-                asientos.add(new Asiento(rs.getInt("id"), rs.getString("name"), rs.getBoolean("state"), new Avion(rs.getString("plane"))));
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
+    public static Asiento findAsientoByNameAndHour(Hora hora, String name) throws SQLException {
+        Asiento asiento = null;
+        ResultSet rs = DBManager.executeQuery("SELECT a.id, a.name, a.plane, ha.status FROM asiento as a INNER JOIN hora_asiento as ha, horas as h WHERE h.id = ha.hora and ha.status = 1 and a.id = ha.asiento and h.hora = ?", new String[]{hora.getHora()});
+        while (rs.next()) {
+            asiento = new Asiento(rs.getInt("id"), rs.getString("name"), rs.getBoolean("status"), new Avion(rs.getString("plane")));
         }
+        return asiento;
+    }
 
+    public static Lista findAsientosDisponiblesFromHour(Hora hora) throws SQLException {
+        Lista asientos = new Lista();
+        ResultSet rs = DBManager.executeQuery("SELECT a.id, a.name, a.plane, ha.status FROM asiento as a INNER JOIN hora_asiento as ha, horas as h WHERE h.id = ha.hora and ha.status = 1 and a.id = ha.asiento and h.hora = ?", new String[]{hora.getHora()});
+        while (rs.next()) {
+            asientos.add(new Asiento(rs.getInt("id"), rs.getString("name"), rs.getBoolean("status"), new Avion(rs.getString("plane"))));
+        }
         return asientos;
     }
 

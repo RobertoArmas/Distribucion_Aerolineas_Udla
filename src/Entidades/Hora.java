@@ -65,16 +65,13 @@ public class Hora implements Serializable {
         return null;
     }
     
-    public static Hora findHoraByHora(String hora){
+    public static Hora findHoraByHora(String hora) throws SQLException{
         Hora h = null;
-        try {
-            ResultSet rs = DBManager.executeQuery("SELECT * FROM horas WHERE hora=?", new String[]{hora});
+        ResultSet rs = DBManager.executeQuery("SELECT * FROM horas WHERE hora=?", new String[]{hora});
             if (rs.first()) {
                 h = new Hora(Integer.parseInt(rs.getString("id")), rs.getString("hora"), new Avion(rs.getString("plane")));
             }
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-        }
+   
         return h;
     }
 

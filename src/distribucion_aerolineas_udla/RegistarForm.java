@@ -14,6 +14,7 @@ import GestorInformacion.GestorInformacion;
 import Listas.Lista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -31,7 +32,7 @@ public class RegistarForm extends javax.swing.JFrame {
     private Cliente clienteSeleccionado;
     private Hora horaSeleccionada;
     private Asiento asientoSeleccionado;
-    private Avion avionSeleccionado;
+    //private Avion avionSeleccionado;
 
     /**
      * Creates new form RegistarForm
@@ -113,22 +114,26 @@ public class RegistarForm extends javax.swing.JFrame {
 
                 if (asientoModel.getSize() == 0) {
                 } else {
-                    new GestorInformacion("asiento") {
 
-                        @Override
-                        public void didGetData(Lista datos) {
-                            for (int i = 0; i < datos.size(); i++) {
+                    asientoSeleccionado = Asiento.findAsientoByNameAndHour(horaSeleccionada,asientoModel.getElementAt(asientoCheckBox.getSelectedIndex()).toString());
+                    asientoSeleccionado = new Asiento(asientoSeleccionado.getId(), asientoSeleccionado.getName(), false, asientoSeleccionado.getAvion());
+                    /* new GestorInformacion("asiento") {
 
-                                asientoSeleccionado = Asiento.findAsientoByNameAndAvion(asientoModel.getElementAt(asientoCheckBox.getSelectedIndex()).toString(), avionSeleccionado.getNombre(), datos);
-                                asientoSeleccionado = new Asiento(asientoSeleccionado.getId(), asientoSeleccionado.getName(), false, asientoSeleccionado.getAvion());
-                            }
-                        }
+                     @Override
+                     public void didGetData(Lista datos) {
+                     for (int i = 0; i < datos.size(); i++) {
 
-                        @Override
-                        public void didFailLoad(String message) {
-                            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                        }
-                    };
+                     asientoSeleccionado = Asiento.findAsientoByNameAndAvion(asientoModel.getElementAt(asientoCheckBox.getSelectedIndex()).toString(), avionSeleccionado.getNombre(), datos);
+                     asientoSeleccionado = new Asiento(asientoSeleccionado.getId(), asientoSeleccionado.getName(), false, asientoSeleccionado.getAvion());
+                     }
+                     }
+
+                     @Override
+                     public void didFailLoad(String message) {
+                     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                     }
+                     };
+                     */
                 }
             }
 
@@ -138,14 +143,19 @@ public class RegistarForm extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                horaSeleccionada = Hora.findHoraByHora((horaModel.getElementAt(horaCheckBox.getSelectedIndex()).toString()));
-                avionSeleccionado = horaSeleccionada.getAvion();
                 asientoModel.removeAllElements();
-                Lista datos = Asiento.findAsientosDisponiblesFromHour(horaSeleccionada);
-                for (int i = 0; i < datos.size(); i++) {
+                try {
+                    horaSeleccionada = Hora.findHoraByHora((horaModel.getElementAt(horaCheckBox.getSelectedIndex()).toString()));
+                    avionSeleccionado = horaSeleccionada.getAvion();
 
-                    asientoModel.addElement(((Asiento) datos.get(i)).getName());
+                    Lista datos = Asiento.findAsientosDisponiblesFromHour(horaSeleccionada);
+                    for (int i = 0; i < datos.size(); i++) {
 
+                        asientoModel.addElement(((Asiento) datos.get(i)).getName());
+
+                    }
+                } catch (SQLException ex) {
+                    System.out.println(ex.toString());
                 }
                 /* new GestorInformacion("asiento") {
 
