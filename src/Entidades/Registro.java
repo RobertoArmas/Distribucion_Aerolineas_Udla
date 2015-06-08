@@ -89,12 +89,12 @@ public class Registro implements Serializable {
 
     public static Lista allRegistro() throws SQLException {
         Lista registros = new Lista();
-        ResultSet rs = DBManager.executeQuery("SELECT r.id, r.ci, c.name, c.lastname, c.phone, c.address, h.id as hora_id, h.hora, h.plane, \n"
-                + "a.id as asiento_id, a.name as asiento, ha.status as asiento_status,  r.status FROM registro as r INNER JOIN \n"
-                + "hora_asiento as ha, horas as h, asiento as a, cliente as c WHERE r.ci = c.id and h.id = ha.hora and a.id = ha.asiento\n"
+        ResultSet rs = DBManager.executeQuery("SELECT r.id, r.ci, c.name, c.lastname, c.phone, c.address, h.id as hora_id, h.hora, h.plane,"
+                + "a.id as asiento_id, a.name as asiento, ha.status as asiento_status,  r.status FROM registro as r INNER JOIN "
+                + "hora_asiento as ha, horas as h, asiento as a, cliente as c WHERE r.ci = c.id and h.id = ha.hora and a.id = ha.asiento "
                 + "AND r.asiento_id = ha.id");
-
-        while (rs.next()) {
+             
+        while(rs.next()) {
             registros.add(new Registro(rs.getInt("id"),
                     new Cliente(rs.getString("ci"), rs.getString("name"), rs.getString("lastname"),
                             rs.getString("phone"), rs.getString("address")),
@@ -104,7 +104,8 @@ public class Registro implements Serializable {
                             rs.getBoolean("asiento_status"),
                             new Avion(rs.getString("plane"))),
                     rs.getBoolean("status")));
-        }
+            
+        }   
         return registros;
     }
 }

@@ -64,9 +64,12 @@ public abstract class GestorInformacion {
                 try{
                     didGetData(Hora.getAllHoras());
                 }catch(SQLException ex){
+                    System.out.println(ex.toString());
                     didFailLoad(ex.toString());
                 }
                   break;
+            default:
+                break;
         }
         
     }

@@ -23,7 +23,7 @@ public class DBManager {
     private static final String DB_HOST = "localhost";
     private static final String DB_NAME = "base_aerolinea";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWD = "";
+    private static final String DB_PASSWD = "admin123";
 
     public static Connection getConnection() throws SQLException {
         try {
@@ -40,11 +40,10 @@ public class DBManager {
         PreparedStatement ps = (PreparedStatement) cn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         // Permite cerrar la conexion que se establecio con la base de datos
-        CachedRowSetImpl rowsetImpl = new CachedRowSetImpl();
-        rowsetImpl.populate(rs);
-        ps.close();
-        cn.close();
-        return rowsetImpl;
+       // CachedRowSetImpl rowsetImpl = new CachedRowSetImpl();
+        //rowsetImpl.populate(rs);
+        //ps.close();
+        return rs;
     }
     
     public static ResultSet executeQuery(String sql, String[] columNames) throws SQLException {

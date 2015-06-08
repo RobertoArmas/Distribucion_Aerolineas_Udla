@@ -231,6 +231,8 @@ public class AgregarClienteForm extends javax.swing.JFrame implements IAgregarCl
              }
             
              };*/
+        }else{
+             mostrarMensaje("Todos los campos son obligatorios");
         }
 
 
