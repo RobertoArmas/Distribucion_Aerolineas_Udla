@@ -5,7 +5,7 @@
  */
 package distribucion_aerolineas_udla;
 
-import Entidades.Cliente;
+import Model.Cliente;
 import GestorInformacion.GestorInformacion;
 import Listas.Lista;
 import java.sql.SQLException;

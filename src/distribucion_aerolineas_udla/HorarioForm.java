@@ -5,7 +5,7 @@
  */
 package distribucion_aerolineas_udla;
 
-import Entidades.Hora;
+import Model.Hora;
 import GestorInformacion.GestorInformacion;
 import Listas.Lista;
 import javax.swing.DefaultListModel;

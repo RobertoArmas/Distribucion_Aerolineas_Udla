@@ -5,11 +5,11 @@
  */
 package GestorInformacion;
 
-import Entidades.Asiento;
-import Entidades.Avion;
-import Entidades.Cliente;
-import Entidades.Hora;
-import Entidades.Registro;
+import Model.Asiento;
+import Model.Avion;
+import Model.Cliente;
+import Model.Hora;
+import Model.Registro;
 import Listas.Lista;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

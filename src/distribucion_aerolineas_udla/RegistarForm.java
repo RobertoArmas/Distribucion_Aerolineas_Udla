@@ -5,11 +5,11 @@
  */
 package distribucion_aerolineas_udla;
 
-import Entidades.Asiento;
-import Entidades.Avion;
-import Entidades.Cliente;
-import Entidades.Hora;
-import Entidades.Registro;
+import Model.Asiento;
+import Model.Avion;
+import Model.Cliente;
+import Model.Hora;
+import Model.Registro;
 import GestorInformacion.GestorInformacion;
 import Listas.Lista;
 import java.awt.event.ActionEvent;
