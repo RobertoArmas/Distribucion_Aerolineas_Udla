@@ -102,5 +102,29 @@ public class Asiento implements Serializable {
         }
         return asientos;
     }
+    
+    public int saveDisponible(Hora hora) throws SQLException{
+        String asiento_id;
+        ResultSet rs = DBManager.executeQuery("SELECT id FROM hora_asiento WHERE hora = ? and asiento = ?",
+                new String[]{String.valueOf(hora.getId()),
+                    String.valueOf(this.id)});
+        if (rs.first()) {
+            asiento_id = rs.getString("id");
+            return DBManager.executeUpdate("UPDATE hora_asiento SET status=1 WHERE id=?", new String[]{asiento_id});
+        }
+
+        return 0;
+        //return DBManager.executeUpdate("UPDATE ", new String[]{"1"});
+    }
+    
+    public static Lista allAsientos() throws SQLException{
+        Lista asientos = new Lista();
+        ResultSet rs = DBManager.executeQuery("SELECT a.id, a.name, a.plane, ha.status FROM asiento as a INNER JOIN hora_asiento as ha WHERE a.id = ha.asiento");
+        while(rs.next()){
+            asientos.add(new Asiento(rs.getInt("id"),rs.getString("name"), rs.getBoolean("status"),
+                new Avion(rs.getString("plane"))));
+        }
+        return asientos;
+    }
 
 }

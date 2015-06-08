@@ -108,4 +108,9 @@ public class Registro implements Serializable {
         }   
         return registros;
     }
+    
+    public int saveCancelar() throws SQLException{
+        
+        return DBManager.executeUpdate("UPDATE registro set status=0 WHERE id=?",new String[]{String.valueOf(this.id)});
+    }
 }

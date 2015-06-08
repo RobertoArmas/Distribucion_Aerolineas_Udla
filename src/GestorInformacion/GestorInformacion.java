@@ -60,6 +60,13 @@ public abstract class GestorInformacion {
                     didFailLoad(ex.toString());
                 }
                 break;
+            case "asiento":
+                try{
+                    didGetData(Asiento.allAsientos());
+                }catch(SQLException ex){
+                    didFailLoad(ex.toString());
+                }
+                break;
             case "horas":
                 try{
                     didGetData(Hora.getAllHoras());

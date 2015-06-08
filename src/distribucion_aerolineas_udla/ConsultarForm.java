@@ -9,6 +9,7 @@ import Entidades.Asiento;
 import Entidades.Registro;
 import GestorInformacion.GestorInformacion;
 import Listas.Lista;
+import java.sql.SQLException;
 import javax.swing.DefaultListModel;
 
 /**
@@ -164,7 +165,18 @@ public class ConsultarForm extends javax.swing.JFrame {
             asientoSelected = ((Registro) registroListObject.get(registroList.getSelectedIndex())).getAsiento();
             asientoSelected.setDisponible(true);
             ((Registro) registroListObject.get(registroList.getSelectedIndex())).setStatus(false);
-            new GestorInformacion("registro", "w", registroListObject) {
+            try{
+                if(asientoSelected.saveDisponible(((Registro) registroListObject.get(registroList.getSelectedIndex())).getHora())==1){
+                    if(((Registro) registroListObject.get(registroList.getSelectedIndex())).saveCancelar()==1){
+                        System.out.println("Guardo");
+                        updateList();
+                    }
+                }
+            }catch (SQLException ex){
+                System.out.println(ex.toString());
+            }
+            
+         /*   new GestorInformacion("registro", "w", registroListObject) {
 
                 @Override
                 public void didGetData(Lista datos) {
@@ -195,7 +207,7 @@ public class ConsultarForm extends javax.swing.JFrame {
                     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 }
             };
-
+            */
         }
 
     }//GEN-LAST:event_cancelarVueloMouseClicked
