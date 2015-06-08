@@ -23,7 +23,7 @@ public class DBManager {
     private static final String DB_HOST = "localhost";
     private static final String DB_NAME = "base_aerolinea";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWD = "admin123";
+    private static final String DB_PASSWD = "";
 
     public static Connection getConnection() throws SQLException {
         try {
