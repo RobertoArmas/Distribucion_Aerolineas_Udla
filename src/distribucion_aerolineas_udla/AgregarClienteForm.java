@@ -8,34 +8,36 @@ package distribucion_aerolineas_udla;
 import Entidades.Cliente;
 import GestorInformacion.GestorInformacion;
 import Listas.Lista;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author robertoarmas
  */
-public class AgregarClienteForm extends javax.swing.JFrame {
 
-    
-    private Lista clientes;
+public class AgregarClienteForm extends javax.swing.JFrame implements IAgregarClienteForm{
+
     /**
      * Creates new form AgregarClienteForm
      */
     public AgregarClienteForm() {
         initComponents();
-       
-    }
 
-    private Boolean validarCampos(){
-        if(this.cedulaTxtField.getText().isEmpty() || this.nombreTxtField.getText().isEmpty() || this.apellidoTxtField.getText().isEmpty() || this.direccionTxtField.getText().isEmpty() || this.tlfTxtField.getText().isEmpty()){
+    }
+    
+
+    private Boolean validarCampos() {
+        if (this.cedulaTxtField.getText().isEmpty() || this.nombreTxtField.getText().isEmpty() || this.apellidoTxtField.getText().isEmpty() || this.direccionTxtField.getText().isEmpty() || this.tlfTxtField.getText().isEmpty()) {
             return false;
         }
         return true;
     }
-    
-    private void mostrarMensaje(String mensaje){
+
+    private void mostrarMensaje(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -185,45 +187,55 @@ public class AgregarClienteForm extends javax.swing.JFrame {
     private void saveBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseClicked
         // TODO add your handling code here:
         /* Guardar el cliente Si no existe */
-        if(this.validarCampos()){
-            final Cliente nuevo = new Cliente(this.cedulaTxtField.getText(),this.nombreTxtField.getText(),this.apellidoTxtField.getText(),this.tlfTxtField.getText(),this.direccionTxtField.getText());
-            clientes = new Lista();
-            new GestorInformacion("cliente"){
-
-                @Override
-                public void didGetData(Lista datos) {
-                   clientes = datos;
-                   if(!Cliente.isExistCliente(nuevo.getCedula(),clientes)){
-                       clientes.add(nuevo);
-                       new GestorInformacion("cliente","w",clientes){
-                           @Override
-                           public void didGetData(Lista datos) {
-                               System.out.println("guardo");
-                                dispose();
-                           }
-
-                           @Override
-                           public void didFailLoad(String message) {
-                               System.out.println("no guardo");
-                           }
-                       };
-                   }else{
-                       mostrarMensaje("Ya existe este cliente");
-                   }
+        if (this.validarCampos()) {
+            final Cliente nuevo = new Cliente(this.cedulaTxtField.getText(), this.nombreTxtField.getText(), this.apellidoTxtField.getText(), this.tlfTxtField.getText(), this.direccionTxtField.getText());
+            try {
+                if (nuevo.insert() == 1) {
+                    System.out.println("guardo");
+                    didSaveCliente();
+                    dispose();
+                } else {
+                    System.out.println("No guardo");
                 }
+            } catch (SQLException ex) {
+                System.out.println(ex.toString());
+            }
+            /*clientes = new Lista();
+             new GestorInformacion("cliente"){
 
-                @Override
-                public void didFailLoad(String message) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
+             @Override
+             public void didGetData(Lista datos) {
+             clientes = datos;
+             if(!Cliente.isExistCliente(nuevo.getCedula(),clientes)){
+             clientes.add(nuevo);
+             new GestorInformacion("cliente","w",clientes){
+             @Override
+             public void didGetData(Lista datos) {
+             System.out.println("guardo");
+             dispose();
+             }
+
+             @Override
+             public void didFailLoad(String message) {
+             System.out.println("no guardo");
+             }
+             };
+             }else{
+             mostrarMensaje("Ya existe este cliente");
+             }
+             }
+
+             @Override
+             public void didFailLoad(String message) {
+             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             }
             
-            };
+             };*/
         }
-        
-        
-    
-    }//GEN-LAST:event_saveBtnMouseClicked
 
+
+    }//GEN-LAST:event_saveBtnMouseClicked
+    
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_saveBtnActionPerformed
@@ -286,4 +298,19 @@ public class AgregarClienteForm extends javax.swing.JFrame {
     private javax.swing.JButton saveBtn;
     private javax.swing.JTextField tlfTxtField;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void didSaveCliente() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void didFailSaveCliente() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+ 
 }
+
+

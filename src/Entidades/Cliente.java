@@ -110,4 +110,9 @@ public class Cliente implements Serializable {
         }
         return clientes;
     }
+
+    public int insert() throws SQLException {
+        return DBManager.executeUpdate("INSERT INTO cliente (id,name,lastname,phone,address) VALUES (?,?,?,?,?)", new String[]{this.cedula, this.name, this.apellido,this.telefono,this.direccion});
+
+    }
 }

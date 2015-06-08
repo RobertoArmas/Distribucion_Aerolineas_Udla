@@ -44,22 +44,7 @@ public class RegistarForm extends javax.swing.JFrame {
         this.horaModel = new DefaultComboBoxModel();
         this.asientoModel = new DefaultComboBoxModel();
 
-        new GestorInformacion("cliente") {
-
-            @Override
-            public void didGetData(Lista datos) {
-                for (int i = 0; i < datos.size(); i++) {
-                    clienteModel.addElement(((Cliente) datos.get(i)).getCedula());
-                }
-                clienteSeleccionado = Cliente.findClienteByCedula(clienteModel.getElementAt(0).toString());
-            }
-
-            @Override
-            public void didFailLoad(String message) {
-                System.out.println("ERROR:" + message);
-            }
-
-        };
+        refreshCliente();
 
         new GestorInformacion("horas") {
 
@@ -86,23 +71,25 @@ public class RegistarForm extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*new GestorInformacion("cliente") {
+                if (clienteModel.getSize() > 0) {
+                    /*new GestorInformacion("cliente") {
 
-                 @Override
-                 public void didGetData(Lista datos) {
-                 for (int i = 0; i < datos.size(); i++) {
-                 clienteSeleccionado = Cliente.findClienteByCedula((clienteModel.getElementAt(clienteCheckBox.getSelectedIndex()).toString()), datos);
+                     @Override
+                     public void didGetData(Lista datos) {
+                     for (int i = 0; i < datos.size(); i++) {
+                     clienteSeleccionado = Cliente.findClienteByCedula((clienteModel.getElementAt(clienteCheckBox.getSelectedIndex()).toString()), datos);
 
-                 }
-                 }
+                     }
+                     }
 
-                 @Override
-                 public void didFailLoad(String message) {
-                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                 }
-                 };*/
+                     @Override
+                     public void didFailLoad(String message) {
+                     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                     }
+                     };*/
 
-                clienteSeleccionado = Cliente.findClienteByCedula(clienteModel.getElementAt(clienteCheckBox.getSelectedIndex()).toString());
+                    clienteSeleccionado = Cliente.findClienteByCedula(clienteModel.getElementAt(clienteCheckBox.getSelectedIndex()).toString());
+                }
             }
 
         });
@@ -339,10 +326,38 @@ public class RegistarForm extends javax.swing.JFrame {
 
     private void addClientBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addClientBtnMouseClicked
         // TODO add your handling code here:
-        AgregarClienteForm addClientForm = new AgregarClienteForm();
+        AgregarClienteForm addClientForm = new AgregarClienteForm() {
+            @Override
+            public void didSaveCliente() {
+                refreshCliente();
+            }
+
+            @Override
+            public void didFailSaveCliente() {
+
+            }
+        };
         addClientForm.show();
     }//GEN-LAST:event_addClientBtnMouseClicked
 
+    public void refreshCliente() {
+        new GestorInformacion("cliente") {
+            @Override
+            public void didGetData(Lista datos) {
+                clienteModel.removeAllElements();
+                for (int i = 0; i < datos.size(); i++) {
+                    clienteModel.addElement(((Cliente) datos.get(i)).getCedula());
+                }
+                clienteSeleccionado = Cliente.findClienteByCedula(clienteModel.getElementAt(0).toString());
+            }
+
+            @Override
+            public void didFailLoad(String message) {
+                System.out.println("ERROR:" + message);
+            }
+
+        };
+    }
     private void registrarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registrarBtnMouseClicked
         // TODO add your handling code here:
         //Registrar
