@@ -35,7 +35,7 @@ public class HorarioForm extends javax.swing.JFrame {
                 }
 
             @Override
-            public void didFailLoad() {
+            public void didFailLoad(String message) {
                 }
         
         };
@@ -87,6 +87,11 @@ public class HorarioForm extends javax.swing.JFrame {
         actualizarBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 actualizarBtnMouseClicked(evt);
+            }
+        });
+        actualizarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                actualizarBtnActionPerformed(evt);
             }
         });
 
@@ -169,6 +174,10 @@ public class HorarioForm extends javax.swing.JFrame {
         app.show();
         this.dispose();
     }//GEN-LAST:event_cerrarBtnMouseClicked
+
+    private void actualizarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_actualizarBtnActionPerformed
 
     /**
      * @param args the command line arguments

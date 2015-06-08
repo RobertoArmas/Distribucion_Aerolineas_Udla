@@ -39,7 +39,7 @@ public class ConsultarForm extends javax.swing.JFrame {
             }
 
             @Override
-            public void didFailLoad() {
+            public void didFailLoad(String message) {
 
             }
         };
@@ -83,6 +83,11 @@ public class ConsultarForm extends javax.swing.JFrame {
         closeBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 closeBtnMouseClicked(evt);
+            }
+        });
+        closeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeBtnActionPerformed(evt);
             }
         });
 
@@ -177,7 +182,7 @@ public class ConsultarForm extends javax.swing.JFrame {
                         }
 
                         @Override
-                        public void didFailLoad() {
+                        public void didFailLoad(String message) {
 
                         }
 
@@ -186,7 +191,7 @@ public class ConsultarForm extends javax.swing.JFrame {
                 }
 
                 @Override
-                public void didFailLoad() {
+                public void didFailLoad(String message) {
                     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 }
             };
@@ -221,6 +226,10 @@ public class ConsultarForm extends javax.swing.JFrame {
     private void cedulaBtnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedulaBtnSearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cedulaBtnSearchActionPerformed
+
+    private void closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_closeBtnActionPerformed
     private void guardarAsientos(Lista asientos) {
 
         new GestorInformacion("asiento", "w", asientos) {
@@ -232,7 +241,7 @@ public class ConsultarForm extends javax.swing.JFrame {
             }
 
             @Override
-            public void didFailLoad() {
+            public void didFailLoad(String message) {
                 System.out.println("Error");
             }
 

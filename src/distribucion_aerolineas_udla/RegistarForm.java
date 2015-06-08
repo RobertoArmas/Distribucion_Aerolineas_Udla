@@ -50,11 +50,12 @@ public class RegistarForm extends javax.swing.JFrame {
                 for (int i = 0; i < datos.size(); i++) {
                     clienteModel.addElement(((Cliente) datos.get(i)).getCedula());
                 }
+                clienteSeleccionado = Cliente.findClienteByCedula(clienteModel.getElementAt(0).toString());
             }
 
             @Override
-            public void didFailLoad() {
-
+            public void didFailLoad(String message) {
+                System.out.println("ERROR:" + message);
             }
 
         };
@@ -70,7 +71,7 @@ public class RegistarForm extends javax.swing.JFrame {
             }
 
             @Override
-            public void didFailLoad() {
+            public void didFailLoad(String message) {
 
             }
 
@@ -84,21 +85,23 @@ public class RegistarForm extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                new GestorInformacion("cliente") {
+                /*new GestorInformacion("cliente") {
 
-                    @Override
-                    public void didGetData(Lista datos) {
-                        for (int i = 0; i < datos.size(); i++) {
-                            clienteSeleccionado = Cliente.findClienteByCedula((clienteModel.getElementAt(clienteCheckBox.getSelectedIndex()).toString()), datos);
+                 @Override
+                 public void didGetData(Lista datos) {
+                 for (int i = 0; i < datos.size(); i++) {
+                 clienteSeleccionado = Cliente.findClienteByCedula((clienteModel.getElementAt(clienteCheckBox.getSelectedIndex()).toString()), datos);
 
-                        }
-                    }
+                 }
+                 }
 
-                    @Override
-                    public void didFailLoad() {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    }
-                };
+                 @Override
+                 public void didFailLoad(String message) {
+                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                 }
+                 };*/
+
+                clienteSeleccionado = Cliente.findClienteByCedula(clienteModel.getElementAt(clienteCheckBox.getSelectedIndex()).toString());
             }
 
         });
@@ -122,7 +125,7 @@ public class RegistarForm extends javax.swing.JFrame {
                         }
 
                         @Override
-                        public void didFailLoad() {
+                        public void didFailLoad(String message) {
                             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                         }
                     };
@@ -135,29 +138,35 @@ public class RegistarForm extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                horaSeleccionada = Hora.findHoraByHora((horaModel.getElementAt(horaCheckBox.getSelectedIndex()).toString()), horasList);
+                horaSeleccionada = Hora.findHoraByHora((horaModel.getElementAt(horaCheckBox.getSelectedIndex()).toString()));
                 avionSeleccionado = horaSeleccionada.getAvion();
                 asientoModel.removeAllElements();
-                new GestorInformacion("asiento") {
+                Lista datos = Asiento.findAsientosDisponiblesFromHour(horaSeleccionada);
+                for (int i = 0; i < datos.size(); i++) {
 
-                    @Override
-                    public void didGetData(Lista datos) {
-                        for (int i = 0; i < datos.size(); i++) {
+                    asientoModel.addElement(((Asiento) datos.get(i)).getName());
 
-                            if (((Asiento) datos.get(i)).getAvion().getNombre().compareTo(horaSeleccionada.getAvion().getNombre()) == 0 && ((Asiento) datos.get(i)).getDisponible() == true) {
-                                asientoModel.addElement(((Asiento) datos.get(i)).getName());
+                }
+                /* new GestorInformacion("asiento") {
 
-                            }
+                 @Override
+                 public void didGetData(Lista datos) {
+                 for (int i = 0; i < datos.size(); i++) {
 
-                        }
-                    }
+                 if (((Asiento) datos.get(i)).getAvion().getNombre().compareTo(horaSeleccionada.getAvion().getNombre()) == 0 && ((Asiento) datos.get(i)).getDisponible() == true) {
+                 asientoModel.addElement(((Asiento) datos.get(i)).getName());
 
-                    @Override
-                    public void didFailLoad() {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    }
+                 }
 
-                };
+                 }
+                 }
+
+                 @Override
+                 public void didFailLoad(String message) {
+                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                 }
+
+                 };*/
 
             }
         });
@@ -165,7 +174,7 @@ public class RegistarForm extends javax.swing.JFrame {
     }
 
     private void guardarAsientos(Lista asientos) {
-      
+
         new GestorInformacion("asiento", "w", asientos) {
 
             @Override
@@ -177,7 +186,7 @@ public class RegistarForm extends javax.swing.JFrame {
             }
 
             @Override
-            public void didFailLoad() {
+            public void didFailLoad(String message) {
                 System.out.println("Error");
             }
 
@@ -247,6 +256,11 @@ public class RegistarForm extends javax.swing.JFrame {
                 cancelBtnMouseClicked(evt);
             }
         });
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -271,8 +285,7 @@ public class RegistarForm extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(asientoCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6))))
+                                .addComponent(asientoCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(236, 236, 236)
                         .addComponent(jLabel4))
@@ -345,7 +358,7 @@ public class RegistarForm extends javax.swing.JFrame {
                                 }
 
                                 @Override
-                                public void didFailLoad() {
+                                public void didFailLoad(String message) {
 
                                 }
 
@@ -353,7 +366,7 @@ public class RegistarForm extends javax.swing.JFrame {
                         }
 
                         @Override
-                        public void didFailLoad() {
+                        public void didFailLoad(String message) {
                             System.out.println("No guardo");
                         }
 
@@ -361,7 +374,7 @@ public class RegistarForm extends javax.swing.JFrame {
                 }
 
                 @Override
-                public void didFailLoad() {
+                public void didFailLoad(String message) {
                     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 }
 
@@ -382,6 +395,10 @@ public class RegistarForm extends javax.swing.JFrame {
         app.show();
         this.dispose();
     }//GEN-LAST:event_cancelBtnMouseClicked
+
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelBtnActionPerformed
 
     /**
      * @param args the command line arguments

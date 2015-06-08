@@ -5,15 +5,18 @@
  */
 package Entidades;
 
+import GestorInformacion.DBManager;
 import Listas.Lista;
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
  * @author robertoarmas
  */
-public class Asiento implements Serializable{
-    
+public class Asiento implements Serializable {
+
     private int id;
     private String name;
     private Boolean disponible;
@@ -62,25 +65,38 @@ public class Asiento implements Serializable{
     public String toString() {
         return this.name;
     }
-    
-    public static Asiento findAsientoById(int id, Lista datos){
-        for(int i=0;i<datos.size();i++){
-            if(id == ((Asiento)datos.get(i)).getId()){
-                return ((Asiento)datos.get(i));
+
+    public static Asiento findAsientoById(int id, Lista datos) {
+        for (int i = 0; i < datos.size(); i++) {
+            if (id == ((Asiento) datos.get(i)).getId()) {
+                return ((Asiento) datos.get(i));
             }
         }
         return null;
     }
-    
-    public static Asiento findAsientoByNameAndAvion(String asiento, String avion, Lista datos){
-        for(int i=0;i<datos.size();i++){
-            if(asiento.compareTo(((Asiento)datos.get(i)).getName()) == 0 && avion.compareTo(((Asiento)datos.get(i)).getAvion().getNombre()) == 0){
-                return ((Asiento)datos.get(i));
+
+    public static Asiento findAsientoByNameAndAvion(String asiento, String avion, Lista datos) {
+        for (int i = 0; i < datos.size(); i++) {
+            if (asiento.compareTo(((Asiento) datos.get(i)).getName()) == 0 && avion.compareTo(((Asiento) datos.get(i)).getAvion().getNombre()) == 0) {
+                return ((Asiento) datos.get(i));
             }
         }
-        
+
         return null;
     }
-    
-    
+
+    public static Lista findAsientosDisponiblesFromHour(Hora hora) {
+        Lista asientos = null;
+        try {
+            ResultSet rs = DBManager.executeQuery("SELECT a.id, a.name, a.plane, h.status FROM asiento as a INNER JOIN hora_asiento as h WHERE h.hora = ? and h.status = 1 and a.id = h.asiento", new String[]{hora.getHora()});
+            while (rs.next()) {
+                asientos.add(new Asiento(rs.getInt("id"), rs.getString("name"), rs.getBoolean("state"), new Avion(rs.getString("plane"))));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+
+        return asientos;
+    }
+
 }

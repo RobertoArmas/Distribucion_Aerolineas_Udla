@@ -37,7 +37,7 @@ public class AsientosForm extends javax.swing.JFrame {
             }
 
             @Override
-            public void didFailLoad() {
+            public void didFailLoad(String message) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };
@@ -106,6 +106,11 @@ public class AsientosForm extends javax.swing.JFrame {
         actualizarBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 actualizarBtnMouseClicked(evt);
+            }
+        });
+        actualizarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                actualizarBtnActionPerformed(evt);
             }
         });
 
@@ -208,6 +213,10 @@ public class AsientosForm extends javax.swing.JFrame {
         app.show();
         this.dispose();
     }//GEN-LAST:event_cerrarBtnMouseClicked
+
+    private void actualizarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_actualizarBtnActionPerformed
 
     /**
      * @param args the command line arguments

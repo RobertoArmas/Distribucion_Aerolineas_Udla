@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -38,8 +39,29 @@ public abstract class GestorInformacion {
     public GestorInformacion(String nombre) {
         this.name = nombre;
         this.auxLista = new Lista();
-        leerArchivo(name + ".txt");
+        //leerArchivo(name + ".txt");
+        loadTable(name);
 
+    }
+    
+    public void loadTable(String nombre){
+        switch(name){
+            case "cliente":
+                try{
+                    didGetData(Cliente.getAllClientes());
+                }catch(SQLException ex){
+                    didFailLoad(ex.toString());
+                }
+                break;
+            case "horas":
+                try{
+                    didGetData(Hora.getAllHoras());
+                }catch(SQLException ex){
+                    didFailLoad(ex.toString());
+                }
+                  break;
+        }
+        
     }
 
     public GestorInformacion(String nombre, String option, Lista datos) {
@@ -80,7 +102,7 @@ public abstract class GestorInformacion {
                     }
 
                     @Override
-                    public void didFailLoad() {
+                    public void didFailLoad(String message) {
                         System.out.println("No funciono");
                         this.auxLista.clear();
                     }
@@ -115,7 +137,7 @@ public abstract class GestorInformacion {
                                     }
 
                                     @Override
-                                    public void didFailLoad() {
+                                    public void didFailLoad(String message) {
                                         System.out.println("No funciono");
                                         this.auxLista.clear();
                                     }
@@ -125,7 +147,7 @@ public abstract class GestorInformacion {
                             }
 
                             @Override
-                            public void didFailLoad() {
+                            public void didFailLoad(String message) {
                                 System.out.println("No funciono");
                                 this.auxLista.clear();
                             }
@@ -135,7 +157,7 @@ public abstract class GestorInformacion {
                     }
 
                     @Override
-                    public void didFailLoad() {
+                    public void didFailLoad(String message) {
                         System.out.println("No funciono");
                         this.auxLista.clear();
                     }
@@ -154,7 +176,7 @@ public abstract class GestorInformacion {
                     }
 
                     @Override
-                    public void didFailLoad() {
+                    public void didFailLoad(String message) {
                         System.out.println("No funciono");
                         this.auxLista.clear();
                     }
@@ -167,10 +189,12 @@ public abstract class GestorInformacion {
         }
 
     }
+    
+ 
 
     public abstract void didGetData(Lista datos);
 
-    public abstract void didFailLoad();
+    public abstract void didFailLoad(String message);
 
     public void leerArchivo(String nombre) {
         try {
@@ -192,7 +216,7 @@ public abstract class GestorInformacion {
            
 
         } catch (IOException ex) {
-            didFailLoad();
+            didFailLoad(ex.toString());
             System.out.println("no funciono ");
         }
         
@@ -261,7 +285,7 @@ public abstract class GestorInformacion {
             }
 
         } catch (IOException ex) {
-            didFailLoad();
+            didFailLoad(ex.toString());
         }
     }
 

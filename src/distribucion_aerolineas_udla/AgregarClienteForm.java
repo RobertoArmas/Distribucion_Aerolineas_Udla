@@ -203,7 +203,7 @@ public class AgregarClienteForm extends javax.swing.JFrame {
                            }
 
                            @Override
-                           public void didFailLoad() {
+                           public void didFailLoad(String message) {
                                System.out.println("no guardo");
                            }
                        };
@@ -213,7 +213,7 @@ public class AgregarClienteForm extends javax.swing.JFrame {
                 }
 
                 @Override
-                public void didFailLoad() {
+                public void didFailLoad(String message) {
                     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 }
             

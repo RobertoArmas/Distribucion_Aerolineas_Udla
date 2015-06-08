@@ -5,15 +5,18 @@
  */
 package Entidades;
 
+import GestorInformacion.DBManager;
 import Listas.Lista;
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
  * @author robertoarmas
  */
-public class Cliente implements Serializable{
-    
+public class Cliente implements Serializable {
+
     private String cedula;
     private String name;
     private String apellido;
@@ -67,8 +70,8 @@ public class Cliente implements Serializable{
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-    
-      public static Cliente findClienteByCedula(String name, Lista datos) {
+
+    public static Cliente findClienteByCedula(String name, Lista datos) {
         for (int i = 0; i < datos.size(); i++) {
             if (name.compareTo(((Cliente) datos.get(i)).getCedula()) == 0) {
                 return ((Cliente) datos.get(i));
@@ -76,17 +79,35 @@ public class Cliente implements Serializable{
         }
         return null;
     }
-      
-      public static Boolean isExistCliente(String cedula, Lista datos){
-          for(int i=0; i<datos.size();i++){
-              if(cedula.compareTo(((Cliente)datos.get(i)).getCedula()) == 0){
-                  return true;
-              }
-          }
-          return false;
-      }
-    
-    
-    
-    
+
+    public static Cliente findClienteByCedula(String cedula) {
+        Cliente cliente = null;
+        try {
+            ResultSet rs = DBManager.executeQuery("SELECT * FROM cliente WHERE id=?", new String[]{cedula});
+            if (rs.first()) {
+                cliente = new Cliente(rs.getString("id"), rs.getString("name"), rs.getString("lastname"), rs.getString("phone"), rs.getString("address"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        return cliente;
+    }
+
+    public static Boolean isExistCliente(String cedula, Lista datos) {
+        for (int i = 0; i < datos.size(); i++) {
+            if (cedula.compareTo(((Cliente) datos.get(i)).getCedula()) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Lista getAllClientes() throws SQLException {
+        Lista clientes = new Lista();
+        ResultSet rs = DBManager.executeQuery("SELECT * FROM cliente");
+        while (rs.next()) {
+            clientes.add(new Cliente(rs.getString("id"), rs.getString("name"), rs.getString("lastname"), rs.getString("phone"), rs.getString("address")));
+        }
+        return clientes;
+    }
 }
