@@ -114,9 +114,12 @@ public class RegistarForm extends javax.swing.JFrame {
 
                 if (asientoModel.getSize() == 0) {
                 } else {
-
+                    try{
                     asientoSeleccionado = Asiento.findAsientoByNameAndHour(horaSeleccionada,asientoModel.getElementAt(asientoCheckBox.getSelectedIndex()).toString());
                     asientoSeleccionado = new Asiento(asientoSeleccionado.getId(), asientoSeleccionado.getName(), false, asientoSeleccionado.getAvion());
+                    }catch(SQLException ex){
+                        System.out.println(ex.toString());
+                    }
                     /* new GestorInformacion("asiento") {
 
                      @Override
@@ -146,7 +149,7 @@ public class RegistarForm extends javax.swing.JFrame {
                 asientoModel.removeAllElements();
                 try {
                     horaSeleccionada = Hora.findHoraByHora((horaModel.getElementAt(horaCheckBox.getSelectedIndex()).toString()));
-                    avionSeleccionado = horaSeleccionada.getAvion();
+                   // avionSeleccionado = horaSeleccionada.getAvion();
 
                     Lista datos = Asiento.findAsientosDisponiblesFromHour(horaSeleccionada);
                     for (int i = 0; i < datos.size(); i++) {
