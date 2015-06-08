@@ -114,10 +114,10 @@ public class RegistarForm extends javax.swing.JFrame {
 
                 if (asientoModel.getSize() == 0) {
                 } else {
-                    try{
-                    asientoSeleccionado = Asiento.findAsientoByNameAndHour(horaSeleccionada,asientoModel.getElementAt(asientoCheckBox.getSelectedIndex()).toString());
-                    asientoSeleccionado = new Asiento(asientoSeleccionado.getId(), asientoSeleccionado.getName(), false, asientoSeleccionado.getAvion());
-                    }catch(SQLException ex){
+                    try {
+                        asientoSeleccionado = Asiento.findAsientoByNameAndHour(horaSeleccionada, asientoModel.getElementAt(asientoCheckBox.getSelectedIndex()).toString());
+                        asientoSeleccionado = new Asiento(asientoSeleccionado.getId(), asientoSeleccionado.getName(), false, asientoSeleccionado.getAvion());
+                    } catch (SQLException ex) {
                         System.out.println(ex.toString());
                     }
                     /* new GestorInformacion("asiento") {
@@ -149,7 +149,7 @@ public class RegistarForm extends javax.swing.JFrame {
                 asientoModel.removeAllElements();
                 try {
                     horaSeleccionada = Hora.findHoraByHora((horaModel.getElementAt(horaCheckBox.getSelectedIndex()).toString()));
-                   // avionSeleccionado = horaSeleccionada.getAvion();
+                    // avionSeleccionado = horaSeleccionada.getAvion();
 
                     Lista datos = Asiento.findAsientosDisponiblesFromHour(horaSeleccionada);
                     for (int i = 0; i < datos.size(); i++) {
@@ -347,51 +347,67 @@ public class RegistarForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Registrar
         if (validarCampos()) {
-            new GestorInformacion("registro") {
-                @Override
-                public void didGetData(Lista datos) {
 
-                    Registro nuevo = new Registro(datos.size() + 1, clienteSeleccionado, horaSeleccionada, asientoSeleccionado, "Vendido");
-                    datos.add(nuevo);
-
-                    new GestorInformacion("registro", "w", datos) {
-                        @Override
-                        public void didGetData(Lista datos) {
-
-                            new GestorInformacion("asiento") {
-
-                                @Override
-                                public void didGetData(Lista datos) {
-                                    for (int i = 0; i < datos.size(); i++) {
-                                        if (asientoSeleccionado.getId() == ((Asiento) datos.get(i)).getId()) {
-                                            datos.getNode(i).setDato(asientoSeleccionado);
-                                        }
-                                    }
-                                    guardarAsientos(datos);
-                                }
-
-                                @Override
-                                public void didFailLoad(String message) {
-
-                                }
-
-                            };
-                        }
-
-                        @Override
-                        public void didFailLoad(String message) {
-                            System.out.println("No guardo");
-                        }
-
-                    };
+            Registro nuevo = new Registro(0, clienteSeleccionado, horaSeleccionada, asientoSeleccionado, true);
+            try {
+                if (nuevo.insert() == 1) {
+                    System.out.println("Guardo");
+                    App app = new App();
+                    app.show();
+                    dispose();
+                } else {
+                    System.out.println("No guardo");
                 }
 
-                @Override
-                public void didFailLoad(String message) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
+            } catch (SQLException ex) {
+                System.out.println(ex.toString());
+            }
 
-            };
+            /* new GestorInformacion("registro") {
+             @Override
+             public void didGetData(Lista datos) {
+
+             Registro nuevo = new Registro(datos.size() + 1, clienteSeleccionado, horaSeleccionada, asientoSeleccionado, "Vendido");
+             datos.add(nuevo);
+
+             new GestorInformacion("registro", "w", datos) {
+             @Override
+             public void didGetData(Lista datos) {
+
+             new GestorInformacion("asiento") {
+
+             @Override
+             public void didGetData(Lista datos) {
+             for (int i = 0; i < datos.size(); i++) {
+             if (asientoSeleccionado.getId() == ((Asiento) datos.get(i)).getId()) {
+             datos.getNode(i).setDato(asientoSeleccionado);
+             }
+             }
+             guardarAsientos(datos);
+             }
+
+             @Override
+             public void didFailLoad(String message) {
+
+             }
+
+             };
+             }
+
+             @Override
+             public void didFailLoad(String message) {
+             System.out.println("No guardo");
+             }
+
+             };
+             }
+
+             @Override
+             public void didFailLoad(String message) {
+             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             }
+
+             };*/
         } else {
             System.out.println("Seleccione ");
         }

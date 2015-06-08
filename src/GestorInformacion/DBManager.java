@@ -61,5 +61,20 @@ public class DBManager {
         cn.close();
         return rowsetImpl;
     }
+    
+        public static int executeUpdate(String sql, String[] columNames) throws SQLException {
+        Connection cn = getConnection();
+        PreparedStatement ps = (PreparedStatement) cn.prepareStatement(sql);
+        for(int i=0;i<columNames.length;i++){
+            ps.setObject(i+1,columNames[i]);
+        }
+        int rs = ps.executeUpdate();
+        // Permite cerrar la conexion que se establecio con la base de datos
+       
+        ps.close();
+        cn.close();
+        return rs;
+    }
+    
 
 }

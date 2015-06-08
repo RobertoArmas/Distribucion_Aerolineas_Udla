@@ -133,7 +133,7 @@ public abstract class GestorInformacion {
                                     @Override
                                     public void didGetData(Lista datos) {
                                         this.auxLista = datos;
-                                        registro.add(new Registro(Integer.parseInt(palabras[0]), cliente, hora, Asiento.findAsientoById(Integer.parseInt(palabras[3]), this.auxLista),palabras[4]));
+                                        registro.add(new Registro(Integer.parseInt(palabras[0]), cliente, hora, Asiento.findAsientoById(Integer.parseInt(palabras[3]), this.auxLista),Boolean.valueOf(palabras[4])));
                                     }
 
                                     @Override

@@ -163,7 +163,7 @@ public class ConsultarForm extends javax.swing.JFrame {
         if (!this.registroList.isSelectionEmpty()) {
             asientoSelected = ((Registro) registroListObject.get(registroList.getSelectedIndex())).getAsiento();
             asientoSelected.setDisponible(true);
-            ((Registro) registroListObject.get(registroList.getSelectedIndex())).setStatus("Cancelado");
+            ((Registro) registroListObject.get(registroList.getSelectedIndex())).setStatus(false);
             new GestorInformacion("registro", "w", registroListObject) {
 
                 @Override

@@ -87,7 +87,7 @@ public class Asiento implements Serializable {
 
     public static Asiento findAsientoByNameAndHour(Hora hora, String name) throws SQLException {
         Asiento asiento = null;
-        ResultSet rs = DBManager.executeQuery("SELECT a.id, a.name, a.plane, ha.status FROM asiento as a INNER JOIN hora_asiento as ha, horas as h WHERE h.id = ha.hora and ha.status = 1 and a.id = ha.asiento and h.hora = ?", new String[]{hora.getHora()});
+        ResultSet rs = DBManager.executeQuery("SELECT a.id, a.name, a.plane, h.status FROM asiento as a INNER JOIN hora_asiento as h WHERE a.id = h.asiento and a.name = ? and h.hora = ?", new String[]{name,String.valueOf(hora.getId())});
         while (rs.next()) {
             asiento = new Asiento(rs.getInt("id"), rs.getString("name"), rs.getBoolean("status"), new Avion(rs.getString("plane")));
         }
